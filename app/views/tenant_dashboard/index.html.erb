@@ -1,0 +1,89 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-black p-6 text-white">
+
+  <!-- HEADER -->
+  <div class="mb-8">
+    <h1 class="text-4xl font-extrabold">
+      My Dashboard ⚡
+    </h1>
+    <p class="text-gray-300 mt-2">
+      Real-time payments overview
+    </p>
+  </div>
+
+  <!-- TENANT CARD (MORE VISIBLE COLORS) -->
+  <div class="relative overflow-hidden rounded-3xl p-6 mb-8
+              bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
+              shadow-2xl">
+
+    <div class="absolute inset-0 opacity-20 bg-white"></div>
+
+    <p class="text-white/80 text-sm">Tenant Profile</p>
+
+    <p class="text-3xl font-bold mt-1">
+      <%= @tenant.name %>
+    </p>
+
+    <div class="mt-4 flex gap-2">
+      <span class="px-3 py-1 text-xs rounded-full bg-white/20">
+        Active
+      </span>
+
+      <span class="px-3 py-1 text-xs rounded-full bg-black/20">
+        Verified
+      </span>
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <h2 class="text-xl font-semibold mb-4 text-white">
+    💰 Payments
+  </h2>
+
+  <!-- PAYMENT GRID -->
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+    <% @payments.each do |p| %>
+      <div class="relative overflow-hidden rounded-2xl p-5
+                  bg-gradient-to-br from-slate-800 via-slate-900 to-black
+                  border border-indigo-500/40
+                  shadow-lg hover:shadow-purple-500/30
+                  transition">
+
+        <!-- colorful glow layers -->
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-500 blur-3xl opacity-40 rounded-full"></div>
+        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500 blur-3xl opacity-40 rounded-full"></div>
+
+        <div class="relative z-10">
+
+          <div class="flex justify-between items-center">
+            <div class="text-2xl font-bold text-green-400">
+              ₹<%= p.amount %>
+            </div>
+
+            <span class="text-xs px-3 py-1 rounded-full
+                         bg-blue-500 text-white">
+              <%= p.payment_date %>
+            </span>
+          </div>
+
+          <p class="text-gray-300 text-sm mt-3">
+            Payment completed successfully ✔
+          </p>
+
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
+  <!-- BUTTON -->
+  <div class="mt-10">
+    <%= link_to "⚡ Pay Rent Now",
+        new_v1_payment_path,
+        class: "inline-block px-6 py-3 rounded-2xl font-bold
+                bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500
+                shadow-lg shadow-purple-500/40
+                hover:scale-105 transition" %>
+  </div>
+
+</div>

@@ -1,0 +1,90 @@
+<div class="min-h-screen flex items-center justify-center px-4">
+
+  <div class="w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 relative overflow-hidden">
+    
+    <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/10 blur-3xl rounded-full"></div>
+
+    <div class="text-center mb-8 relative z-10">
+      <h2 class="text-3xl font-extrabold text-white tracking-tight">
+        Welcome back
+      </h2>
+      <p class="text-slate-400 text-sm mt-2">
+        Login to continue to your SaaS dashboard
+      </p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+      <div class="mb-5 relative z-10">
+        <%= f.label :email, class: "block text-sm font-medium text-slate-300 mb-2" %>
+
+        <%= f.email_field :email,
+          autofocus: true,
+          autocomplete: "email",
+          placeholder: "Enter your email",
+          class: "w-full px-4 py-3 rounded-xl
+                   bg-slate-900/80 border border-white/10
+                   text-white placeholder-slate-500
+                   focus:outline-none focus:ring-2 focus:ring-purple-500/50
+                   focus:border-purple-500 focus:bg-slate-900
+                   transition duration-200
+                   [color-scheme:dark]
+                   file:bg-transparent
+                   autofill:shadow-[0_0_0_30px_#0f172a_inset] 
+                   autofill:text-fill-white" %>
+      </div>
+
+      <div class="mb-5 relative z-10">
+        <%= f.label :password, class: "block text-sm font-medium text-slate-300 mb-2" %>
+
+        <%= f.password_field :password,
+          autocomplete: "current-password",
+          placeholder: "Enter your password",
+          class: "w-full px-4 py-3 rounded-xl
+                   bg-slate-900/80 border border-white/10
+                   text-white placeholder-slate-500
+                   focus:outline-none focus:ring-2 focus:ring-purple-500/50
+                   focus:border-purple-500 focus:bg-slate-900
+                   transition duration-200
+                   [color-scheme:dark]
+                   autofill:shadow-[0_0_0_30px_#0f172a_inset] 
+                   autofill:text-fill-white" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center justify-between mb-6 text-sm relative z-10">
+          <label class="flex items-center gap-2 text-slate-400 cursor-pointer group">
+            <%= f.check_box :remember_me, 
+                class: "rounded border-white/20 bg-slate-900 text-purple-600 focus:ring-offset-slate-950 focus:ring-purple-500" %>
+            <span class="group-hover:text-slate-200 transition">Remember me</span>
+          </label>
+
+          <%= link_to "Forgot password?", new_password_path(resource_name),
+              class: "text-purple-400 hover:text-purple-300 transition font-medium" %>
+        </div>
+      <% end %>
+
+      <div class="relative z-10">
+        <%= f.submit "Log in",
+          class: "w-full py-3 rounded-xl
+                   bg-gradient-to-r from-pink-500 to-violet-600
+                   text-white font-bold text-lg
+                   shadow-lg shadow-purple-500/20
+                   hover:scale-[1.02] hover:brightness-110 transition
+                   active:scale-95 cursor-pointer" %>
+      </div>
+
+    <% end %>
+
+    <div class="my-6 flex items-center gap-3 relative z-10">
+      <div class="h-px bg-white/10 flex-1"></div>
+      <span class="text-xs text-slate-500 uppercase tracking-widest font-bold">or</span>
+      <div class="h-px bg-white/10 flex-1"></div>
+    </div>
+
+    <div class="text-center text-sm text-slate-400 relative z-10">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</div>

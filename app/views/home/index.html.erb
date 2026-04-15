@@ -1,0 +1,99 @@
+<!-- 🌆 HERO SECTION -->
+<div class="relative h-[70vh] flex items-center justify-center text-center text-white">
+
+  <!-- Background -->
+  <div class="absolute inset-0">
+    <img 
+      src="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/60"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-2xl px-4">
+    <h1 class="text-5xl font-bold mb-4">
+      Premium Gated Community Living
+    </h1>
+
+    <p class="text-lg mb-8 text-gray-200">
+      Modern homes, green spaces, and vibrant neighborhood amenities
+    </p>
+
+    <!-- FIXED BUTTON SPACING -->
+    <div class="flex justify-center gap-4 flex-wrap">
+      <%= link_to "Explore Tenants", v1_tenants_path,
+        class: "bg-indigo-600 px-6 py-3 rounded-lg shadow hover:bg-indigo-700 transition" %>
+
+      <%= link_to "Browse Units", v1_units_path,
+        class: "bg-white text-gray-800 px-6 py-3 rounded-lg shadow hover:bg-gray-200 transition" %>
+    </div>
+  </div>
+</div>
+
+<!-- 🏡 COMMUNITY GALLERY -->
+<div class="max-w-7xl mx-auto px-6 py-12">
+
+  <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+    Our Community
+  </h2>
+
+  <!-- GRID -->
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+    <!-- 🏠 Houses -->
+    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+    <img src="https://images.unsplash.com/photo-1572120360610-d971b9b639c0" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+
+    <!-- 🌳 Green Areas / Trees -->
+    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+
+    <!-- 🛣️ Roads -->
+    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+    <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+
+    <!-- 🏪 Shops -->
+    <img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+    <img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd53" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+
+    <!-- 🧑‍🤝‍🧑 Lifestyle -->
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+    <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" class="rounded-xl shadow hover:scale-105 transition object-cover h-48 w-full">
+
+  </div>
+</div>
+
+<!-- 🌟 FEATURES SECTION -->
+<div class="bg-white py-12">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+      Why Choose Our Community?
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="p-6 rounded-xl shadow">
+        <h3 class="font-semibold text-lg mb-2">🏡 Modern Homes</h3>
+        <p class="text-gray-500">Spacious houses with premium design</p>
+      </div>
+
+      <div class="p-6 rounded-xl shadow">
+        <h3 class="font-semibold text-lg mb-2">🌳 Green Environment</h3>
+        <p class="text-gray-500">Tree-lined roads and parks</p>
+      </div>
+
+      <div class="p-6 rounded-xl shadow">
+        <h3 class="font-semibold text-lg mb-2">🛍️ Nearby Shops</h3>
+        <p class="text-gray-500">Groceries, salons, and essentials</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>

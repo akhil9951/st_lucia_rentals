@@ -1,0 +1,50 @@
+<h1 class="text-3xl font-bold text-gray-800 mb-2">Tenants</h1>
+<p class="text-gray-500 mb-6">Manage all your tenants in one place</p>
+
+<%= link_to "➕ New Tenant", new_v1_tenant_path,
+  class: "bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 hover:scale-105 transition" %>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+  <% @tenants.each do |tenant| %>
+    <div class="bg-white p-5 rounded-2xl shadow hover:shadow-xl transition transform hover:-translate-y-1 border border-gray-100">
+
+      <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-indigo-500 text-white flex items-center justify-center rounded-full">
+      <%= tenant.name.first.upcase %>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold text-gray-800"><%= tenant.name %></h2>
+      <p class="text-gray-500 text-sm"><%= tenant.email %></p>
+    </div>
+  </div>
+
+  <div class="mt-4 flex justify-between items-center">
+     <%= link_to "View", v1_tenant_path(tenant),
+      class: "text-indigo-600 font-medium hover:underline" %>
+
+     <%= link_to "Edit", edit_v1_tenant_path(tenant),
+      class: "text-yellow-600 font-medium hover:underline" %>
+  </div>
+
+  </div>
+  <% end %>
+</div>
+
+<% if @tenants.any? %>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    <% @tenants.each do |tenant| %>
+      <!-- card code -->
+    <% end %>
+  </div>
+
+<% else %>
+
+  <div class="text-center p-10">
+    <p class="text-gray-500 mb-4">No tenants found</p>
+    <%= link_to "Create Tenant", new_v1_tenant_path,
+      class: "bg-indigo-600 text-white px-4 py-2 rounded" %>
+  </div>
+
+<% end %>

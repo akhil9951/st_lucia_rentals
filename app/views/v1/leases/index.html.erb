@@ -1,0 +1,79 @@
+<div class="max-w-6xl mx-auto px-4">
+  
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+    <div>
+      <h1 class="text-4xl font-black text-white tracking-tight">
+        Active <span class="text-indigo-500">Leases</span>
+      </h1>
+      <p class="text-slate-400 mt-1">Overview of all active rental agreements and contracts.</p>
+    </div>
+
+    <%= link_to new_v1_lease_path, 
+        class: "inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg shadow-purple-500/20 hover:scale-105 transition active:scale-95" do %>
+      <span>📄</span> Create New Lease
+    <% end %>
+  </div>
+
+  <div class="space-y-4">
+    <% if @leases.any? %>
+      <% @leases.each do |lease| %>
+        <div class="group relative bg-slate-900/40 border border-white/5 rounded-2xl p-5 hover:bg-slate-900/60 hover:border-indigo-500/30 transition-all duration-300">
+          
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            
+            <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-12">
+              
+              <div class="flex items-center gap-3 min-w-[180px]">
+                <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 font-bold">
+                  <%= lease.tenant.name[0] %>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Tenant</p>
+                  <p class="text-white font-bold group-hover:text-indigo-400 transition-colors"><%= lease.tenant.name %></p>
+                </div>
+              </div>
+
+              <div class="hidden md:block text-slate-700 text-xl">→</div>
+
+              <div class="flex items-center gap-3 min-w-[150px]">
+                <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-xl">
+                  🏢
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Unit</p>
+                  <p class="text-white font-bold"><%= lease.unit.name %></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between lg:justify-end gap-8 border-t lg:border-none border-white/5 pt-4 lg:pt-0">
+              <div class="text-left lg:text-right">
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Monthly Rent</p>
+                <p class="text-emerald-400 font-black text-xl">₹<%= number_with_delimiter(lease.rent_amount) %></p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <%= link_to v1_lease_path(lease), 
+                    class: "px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-xl border border-white/10 transition" do %>
+                  Details
+                <% end %>
+                
+                <%= link_to edit_v1_lease_path(lease), 
+                    class: "p-2 bg-slate-800/50 hover:bg-indigo-500/20 text-slate-400 hover:text-indigo-400 rounded-xl transition" do %>
+                  ✏️
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center py-20 bg-slate-900/20 border-2 border-dashed border-white/5 rounded-[3rem]">
+        <div class="text-5xl mb-4 opacity-20">📑</div>
+        <h3 class="text-xl font-bold text-slate-400">No active leases</h3>
+        <p class="text-slate-600 mt-2">Ready to move someone in? Create your first lease agreement above.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

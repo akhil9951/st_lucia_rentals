@@ -1,0 +1,58 @@
+<div class="mb-8">
+  <h1 class="text-4xl font-extrabold tracking-tight text-white">
+    Overview <span class="text-indigo-500">Dashboard</span>
+  </h1>
+  <p class="text-slate-400 mt-2">Real-time statistics for your property portfolio.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+  <div class="group relative overflow-hidden bg-slate-900/50 border border-slate-800 p-6 rounded-3xl transition-all hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10">
+    <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-600/10 blur-2xl rounded-full group-hover:bg-indigo-600/20 transition-all"></div>
+    
+    <div class="flex flex-col gap-1">
+      <span class="text-indigo-400 text-xs font-bold uppercase tracking-widest">Tenants</span>
+      <div class="flex items-end justify-between">
+        <p class="text-3xl font-black text-white"><%= @tenants_count %></p>
+        <span class="text-2xl opacity-80">👥</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="group relative overflow-hidden bg-slate-900/50 border border-slate-800 p-6 rounded-3xl transition-all hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10">
+    <div class="absolute -right-4 -top-4 w-20 h-20 bg-emerald-600/10 blur-2xl rounded-full group-hover:bg-emerald-600/20 transition-all"></div>
+    
+    <div class="flex flex-col gap-1">
+      <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Total Units</span>
+      <div class="flex items-end justify-between">
+        <p class="text-3xl font-black text-white"><%= @units_count %></p>
+        <span class="text-2xl opacity-80">🏠</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="group relative overflow-hidden bg-slate-900/50 border border-slate-800 p-6 rounded-3xl transition-all hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/10">
+    <div class="absolute -right-4 -top-4 w-20 h-20 bg-orange-600/10 blur-2xl rounded-full group-hover:bg-orange-600/20 transition-all"></div>
+    
+    <div class="flex flex-col gap-1">
+      <span class="text-orange-400 text-xs font-bold uppercase tracking-widest">Occupancy</span>
+      <div class="flex items-end justify-between">
+        <p class="text-3xl font-black text-white"><%= @occupied_units %></p>
+        <span class="text-2xl opacity-80">🔑</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="group relative overflow-hidden bg-slate-900/50 border border-slate-800 p-6 rounded-3xl transition-all hover:border-pink-500/50 hover:shadow-lg hover:shadow-pink-500/10">
+    <div class="absolute -right-4 -top-4 w-20 h-20 bg-pink-600/10 blur-2xl rounded-full group-hover:bg-pink-600/20 transition-all"></div>
+    
+    <div class="flex flex-col gap-1">
+      <span class="text-pink-400 text-xs font-bold uppercase tracking-widest">Total Revenue</span>
+      <div class="flex items-end justify-between">
+        <p class="text-3xl font-black text-white">₹<%= number_with_delimiter(@total_revenue) %></p>
+        <span class="text-2xl opacity-80">💰</span>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tenant: one
+  unit: one
+  start_date: 2026-04-12
+  end_date: 2026-04-12
+  rent_amount: 9.99
+  due_date: 2026-04-12
+  status: 1
+
+two:
+  tenant: two
+  unit: two
+  start_date: 2026-04-12
+  end_date: 2026-04-12
+  rent_amount: 9.99
+  due_date: 2026-04-12
+  status: 1

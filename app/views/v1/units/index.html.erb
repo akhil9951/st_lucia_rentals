@@ -1,0 +1,57 @@
+<h1 class="text-3xl font-bold mb-6">Units</h1>
+
+<div class="flex justify-between items-center mb-6">
+  <p class="text-gray-600">Manage your property units</p>
+
+  <%= link_to "➕ New Unit", new_v1_unit_path,
+    class: "bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition" %>
+</div>
+
+<% if @units.any? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <% @units.each do |unit| %>
+      <div class="bg-white p-5 rounded-2xl shadow hover:shadow-lg transition transform hover:-translate-y-1">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-semibold"><%= unit.name %></h2>
+
+          <!-- Status Badge -->
+          <span class="px-3 py-1 text-sm rounded-full
+            <%= unit.vacant? ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' %>">
+            <%= unit.status.capitalize %>
+          </span>
+        </div>
+
+        <!-- Rent -->
+        <p class="text-gray-500 mt-2">Rent</p>
+        <p class="text-xl font-bold text-indigo-600">₹<%= unit.rent_amount %></p>
+
+        <!-- Divider -->
+        <hr class="my-4">
+
+        <!-- Actions -->
+        <div class="flex justify-between items-center">
+          <%= link_to "View", v1_unit_path(unit),
+            class: "text-blue-600 font-medium hover:underline" %>
+
+          <%= link_to "Edit", edit_v1_unit_path(unit),
+            class: "text-yellow-600 font-medium hover:underline" %>
+        </div>
+
+      </div>
+    <% end %>
+
+  </div>
+<% else %>
+
+  <!-- Empty State -->
+  <div class="bg-white p-6 rounded-xl shadow text-center">
+    <p class="text-gray-500 mb-4">No units available</p>
+
+    <%= link_to "Create your first unit", new_v1_unit_path,
+      class: "bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700" %>
+  </div>
+
+<% end %>

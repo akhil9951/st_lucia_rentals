@@ -1,0 +1,9 @@
+<h2>Verify OTP</h2>
+
+<%= form_with url: otp_verify_path, method: :post do %>
+  <%= hidden_field_tag :email, params[:email] %>
+
+  <%= text_field_tag :otp, nil, placeholder: "Enter OTP" %>
+
+  <%= submit_tag "Verify" %>
+<% end %>
