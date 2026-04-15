@@ -1,3 +1,5 @@
+# app/models/concerns/payable.rb
+
 module Payable
   extend ActiveSupport::Concern
 
