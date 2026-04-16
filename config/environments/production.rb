@@ -99,18 +99,15 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   
-  config.action_mailer.default_url_options = {
-    host: "sass.com"
-  }
+  config.action_mailer.default_url_options = { host: "st-lucia-rentals.onrender.com" }
   
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: 587,
-    domain: "sass.com",
+    domain: "onrender.com",
     user_name: "apikey",
     password: Rails.application.credentials.dig(:sendgrid, :api_key),
     authentication: :plain,
     enable_starttls_auto: true
   }
-
 end
