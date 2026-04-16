@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_15_043835) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_16_064317) do
   create_table "leases", force: :cascade do |t|
     t.integer "tenant_id", null: false
     t.integer "unit_id", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_043835) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "late_fee"
     t.index ["tenant_id"], name: "index_leases_on_tenant_id"
     t.index ["unit_id"], name: "index_leases_on_unit_id"
   end

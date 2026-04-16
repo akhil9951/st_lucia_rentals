@@ -28,6 +28,7 @@ gem "jbuilder"
 
 gem "tailwindcss-rails", "~> 3.3.1"
 
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -70,3 +71,4 @@ group :test do
 end
 
 gem "devise", "~> 5.0"
+gem "whenever", require: false

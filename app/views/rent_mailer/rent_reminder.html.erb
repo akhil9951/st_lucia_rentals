@@ -1,0 +1,38 @@
+<h2>💰 Rent Reminder</h2>
+
+<p>Hello <%= @tenant.name %>,</p>
+
+<p>
+  Your rent of <strong>₹<%= @lease.rent_amount %></strong> is due.
+</p>
+
+<p>
+  Due Date: <%= @lease.due_date %>
+</p>
+
+<p>
+  Please make the payment as soon as possible to avoid late fees.
+</p>
+
+<br>
+
+<p>
+  <%= link_to "Pay Now", new_user_session_url,
+    style: "background:#4f46e5;color:white;padding:10px 15px;border-radius:5px;text-decoration:none;" %>
+</p>
+
+<br>
+
+<p>
+  Rent: ₹<%= @lease.rent_amount %>
+</p>
+
+<% if @lease.late_fee.to_i > 0 %>
+  <p style="color:red;">
+    Late Fee: ₹<%= @lease.late_fee %>
+  </p>
+<% end %>
+
+<br>
+
+<p>Thanks,<br>My SaaS Team</p>
