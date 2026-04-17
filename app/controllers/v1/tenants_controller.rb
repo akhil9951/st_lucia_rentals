@@ -4,26 +4,28 @@ module V1
       before_action :set_tenant, only: [:show, :edit, :update, :destroy]
   
       def index
-        @tenants = Tenant.all
+          @tenants = current_user.owned_tenants
       end
   
       def show
+        @tenant = current_user.owned_tenants.find(params[:id])
       end
   
       def new
         @tenant = Tenant.new
       end
   
+
       def create
-        @tenant = Tenant.new(tenant_params)
-  
+        @tenant = current_user.owned_tenants.build(tenant_params)
+      
         if @tenant.save
-          redirect_to v1_tenant_path(@tenant), notice: "Tenant created successfully"
+          redirect_to v1_tenants_path, notice: "Tenant created successfully"
         else
           render :new
         end
       end
-  
+
       def edit
       end
   

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_16_064317) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_16_185416) do
   create_table "leases", force: :cascade do |t|
     t.integer "tenant_id", null: false
     t.integer "unit_id", null: false
@@ -47,6 +47,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_16_064317) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "owner_id"
+    t.index ["owner_id"], name: "index_tenants_on_owner_id"
     t.index ["user_id"], name: "index_tenants_on_user_id"
   end
 
@@ -56,6 +58,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_16_064317) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "owner_id"
+    t.index ["owner_id"], name: "index_units_on_owner_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -84,4 +88,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_16_064317) do
   add_foreign_key "payments", "leases"
   add_foreign_key "payments", "tenants"
   add_foreign_key "tenants", "users"
+  add_foreign_key "tenants", "users", column: "owner_id"
+  add_foreign_key "units", "users", column: "owner_id"
 end

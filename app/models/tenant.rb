@@ -6,6 +6,8 @@ class Tenant < ApplicationRecord
     has_many :leases, dependent: :destroy
     has_many :units, through: :leases
     has_many :payments, dependent: :destroy
+    belongs_to :owner, class_name: "User"
+
   
     enum status: { active: 0, inactive: 1 }
   

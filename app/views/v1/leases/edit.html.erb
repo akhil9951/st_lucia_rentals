@@ -1,0 +1,102 @@
+<div class="max-w-3xl mx-auto px-4 py-8">
+  
+  <div class="mb-6">
+    <%= link_to v1_lease_path(@lease), class: "group inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors" do %>
+      <span class="text-lg group-hover:-translate-x-1 transition-transform duration-200">←</span>
+      <span class="font-medium">Discard & Back to Lease</span>
+    <% end %>
+  </div>
+
+  <div class="relative overflow-hidden bg-slate-900/60 border border-white/10 backdrop-blur-xl rounded-[2.5rem] shadow-2xl p-8 md:p-12">
+    
+    <div class="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+    <div class="relative z-10">
+      <h1 class="text-3xl font-black text-white mb-2">
+        Edit <span class="text-indigo-400">Lease</span>
+      </h1>
+      <p class="text-slate-400 mb-8">
+        Update agreement terms, financial details, and current status for this contract.
+      </p>
+
+      <%= form_with model: [:v1, @lease], local: true, class: "space-y-6" do |form| %>
+        
+        <% if @lease.errors.any? %>
+          <div class="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 animate-in fade-in slide-in-from-top-2">
+            <h2 class="text-rose-400 font-bold mb-2 flex items-center gap-2">
+              <span>⚠️</span> <%= pluralize(@lease.errors.count, "error") %> prevented updates:
+            </h2>
+            <ul class="text-rose-300/80 text-sm space-y-1 ml-6 list-disc">
+              <% @lease.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="group">
+            <%= form.label :tenant_id, "Tenant Name", class: "block text-sm font-semibold text-slate-400 group-focus-within:text-indigo-400 mb-2 transition-colors" %>
+            <%= form.collection_select :tenant_id, Tenant.all, :id, :name, { prompt: "Select Tenant" },
+                class: "w-full rounded-2xl bg-slate-950 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark]" %>
+          </div>
+
+          <div class="group">
+            <%= form.label :unit_id, "Property Unit", class: "block text-sm font-semibold text-slate-400 group-focus-within:text-indigo-400 mb-2 transition-colors" %>
+            <%= form.collection_select :unit_id, Unit.all, :id, :name, { prompt: "Select Unit" },
+                class: "w-full rounded-2xl bg-slate-950 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark]" %>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="group">
+            <%= form.label :start_date, "Contract Start Date", class: "block text-sm font-semibold text-slate-400 group-focus-within:text-indigo-400 mb-2 transition-colors" %>
+            <%= form.date_field :start_date,
+                class: "w-full rounded-2xl bg-slate-950 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark]" %>
+          </div>
+
+          <div class="group">
+            <%= form.label :end_date, "Contract End Date", class: "block text-sm font-semibold text-slate-400 group-focus-within:text-indigo-400 mb-2 transition-colors" %>
+            <%= form.date_field :end_date,
+                class: "w-full rounded-2xl bg-slate-950 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark]" %>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="group">
+            <%= form.label :rent_amount, "Monthly Rent (₹)", class: "block text-sm font-semibold text-slate-400 group-focus-within:text-indigo-400 mb-2 transition-colors" %>
+            <%= form.number_field :rent_amount,
+                step: :any,
+                class: "w-full rounded-2xl bg-slate-950 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder-slate-600",
+                placeholder: "0.00" %>
+          </div>
+
+          <div class="group">
+            <%= form.label :deposit_amount, "Security Deposit (₹)", class: "block text-sm font-semibold text-slate-400 group-focus-within:text-indigo-400 mb-2 transition-colors" %>
+            <%= form.number_field :deposit_amount,
+                step: :any,
+                class: "w-full rounded-2xl bg-slate-950 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder-slate-600",
+                placeholder: "0.00" %>
+          </div>
+        </div>
+
+        <div class="group">
+          <%= form.label :status, "Lease Status", class: "block text-sm font-semibold text-slate-400 group-focus-within:text-indigo-400 mb-2 transition-colors" %>
+          <%= form.select :status,
+              [["Active", "active"], ["Completed", "completed"], ["Terminated", "terminated"]],
+              { prompt: "Set Current Status" },
+              class: "w-full rounded-2xl bg-slate-950 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark] cursor-pointer" %>
+        </div>
+
+        <div class="flex items-center gap-4 pt-6">
+          <%= form.submit "Update Lease Agreement",
+              data: { disable_with: "Saving Changes..." },
+              class: "flex-1 px-6 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-black shadow-lg shadow-indigo-500/20 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" %>
+
+          <%= link_to "Cancel", v1_lease_path(@lease),
+              class: "px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-colors" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

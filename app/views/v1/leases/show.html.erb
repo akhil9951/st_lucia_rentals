@@ -1,9 +1,9 @@
-<div class="max-w-4xl mx-auto px-4">
+<div class="max-w-4xl mx-auto px-4 py-8">
   
   <div class="mb-8">
-    <%= link_to v1_leases_path, class: "group flex items-center gap-2 text-slate-400 hover:text-white transition" do %>
-      <span class="text-lg group-hover:-translate-x-1 transition-transform">←</span>
-      Back to Leases
+    <%= link_to v1_leases_path, class: "group inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors" do %>
+      <span class="text-lg group-hover:-translate-x-1 transition-transform duration-200">←</span>
+      <span class="font-medium">Back to Leases</span>
     <% end %>
   </div>
 
@@ -11,32 +11,59 @@
     <div class="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full"></div>
     
     <div class="relative z-10">
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="text-3xl font-black text-white tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-          Lease Details
-        </h2>
-        <span class="px-4 py-1.5 bg-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-widest rounded-full border border-indigo-500/30">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 class="text-3xl font-black text-white tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+            Lease Details
+          </h2>
+          <p class="text-slate-500 text-sm mt-1">Contract ID: #LSE-00<%= @lease.id %></p>
+        </div>
+        <span class="w-fit px-4 py-1.5 bg-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-widest rounded-full border border-indigo-500/30">
           Active Contract
         </span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div class="space-y-1">
-          <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Tenant</p>
-          <p class="text-white text-xl font-bold"><%= @lease.tenant.name %></p>
+          <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.1em]">Tenant</p>
+          <p class="text-white text-lg font-bold"><%= @lease.tenant.name %></p>
         </div>
 
         <div class="space-y-1">
-          <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Property Unit</p>
-          <div class="flex items-center gap-2">
+          <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.1em]">Property Unit</p>
+          <div class="flex items-center gap-2 text-white text-lg font-bold">
             <span class="text-indigo-400">🏢</span>
-            <p class="text-white text-xl font-bold"><%= @lease.unit.name %></p>
+            <p><%= @lease.unit.name %></p>
           </div>
         </div>
 
         <div class="space-y-1">
-          <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Agreed Rent</p>
-          <p class="text-emerald-400 text-2xl font-black">₹<%= number_with_delimiter(@lease.rent_amount) %></p>
+          <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.1em]">Start Date</p>
+          <p class="text-white text-lg font-bold">
+            <%= @lease.start_date.strftime("%d %b %Y") %>
+          </p>
+        </div>
+
+        <div class="space-y-1">
+          <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.1em]">Agreed Rent</p>
+          <p class="text-emerald-400 text-xl font-black italic">₹<%= number_with_delimiter(@lease.rent_amount) %></p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 pt-6 border-t border-white/5">
+        <div class="flex items-center gap-3">
+          <div class="w-1.5 h-8 bg-emerald-500 rounded-full"></div>
+          <div>
+            <p class="text-[10px] text-slate-500 font-bold uppercase">Total Received</p>
+            <p class="text-white font-black">₹<%= number_with_delimiter(@lease.payments.sum(:amount)) %></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-1.5 h-8 bg-indigo-500 rounded-full"></div>
+          <div>
+            <p class="text-[10px] text-slate-500 font-bold uppercase">Lease Status</p>
+            <p class="text-white font-black">Good Standing</p>
+          </div>
         </div>
       </div>
     </div>
@@ -48,33 +75,36 @@
     </h3>
     
     <%= link_to new_v1_payment_path(lease_id: @lease.id),
-        class: "inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-emerald-500/20 hover:scale-105 transition active:scale-95 text-sm" do %>
+        class: "inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-xl font-black shadow-lg shadow-emerald-500/20 hover:scale-[1.03] transition-all active:scale-95 text-sm" do %>
       <span>+</span> Add New Payment
     <% end %>
   </div>
 
   <div class="space-y-3">
     <% if @lease.payments.any? %>
-      <% @lease.payments.each do |p| %>
-        <div class="group flex items-center justify-between p-4 bg-slate-900/30 border border-white/5 rounded-2xl hover:bg-slate-900/50 hover:border-emerald-500/30 transition">
+      <% @lease.payments.order(payment_date: :desc).each do |p| %>
+        <div class="group flex items-center justify-between p-5 bg-slate-900/30 border border-white/5 rounded-2xl hover:bg-slate-900/50 hover:border-emerald-500/30 transition-all duration-300">
           <div class="flex items-center gap-4">
-            <div class="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400">
+            <div class="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
               ✓
             </div>
             <div>
-              <p class="text-white font-bold">₹<%= number_with_delimiter(p.amount) %></p>
-              <p class="text-slate-500 text-xs tracking-wide"><%= p.payment_date.strftime("%B %d, %Y") %></p>
+              <p class="text-white font-bold text-lg">₹<%= number_with_delimiter(p.amount) %></p>
+              <p class="text-slate-500 text-xs font-medium tracking-wide"><%= p.payment_date.strftime("%B %d, %Y") %></p>
             </div>
           </div>
           
-          <span class="text-xs font-bold text-slate-600 uppercase group-hover:text-emerald-500/50 transition">Success</span>
+          <div class="flex items-center gap-4">
+            <span class="hidden md:inline-block text-[10px] font-black text-slate-600 uppercase tracking-widest group-hover:text-emerald-500/50 transition">Transfer</span>
+            <span class="px-3 py-1 bg-emerald-500/5 text-emerald-500 text-[10px] font-bold uppercase rounded-md border border-emerald-500/10">Success</span>
+          </div>
         </div>
       <% end %>
     <% else %>
-      <div class="text-center py-12 bg-slate-900/20 border-2 border-dashed border-white/5 rounded-3xl">
-        <p class="text-slate-500 italic">No payments recorded for this lease yet.</p>
+      <div class="text-center py-20 bg-slate-900/20 border-2 border-dashed border-white/5 rounded-[2.5rem]">
+        <div class="text-4xl mb-4 opacity-20">💸</div>
+        <p class="text-slate-500 font-medium italic">No payments recorded for this lease yet.</p>
       </div>
     <% end %>
   </div>
-
 </div>

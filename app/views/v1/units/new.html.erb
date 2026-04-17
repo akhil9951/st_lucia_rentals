@@ -1,75 +1,83 @@
-<div class="max-w-6xl mx-auto px-4">
+<div class="max-w-2xl mx-auto px-4 py-12">
   
-  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
-    <div>
-      <h1 class="text-4xl font-black text-white tracking-tight">
-        Property <span class="text-indigo-500">Units</span>
-      </h1>
-      <p class="text-slate-400 mt-1">Manage and monitor all available residential units.</p>
-    </div>
-
-    <%= link_to new_v1_unit_path, 
-        class: "inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-500/20 hover:scale-105 transition active:scale-95" do %>
-      <span>+</span> Add New Unit
+  <div class="mb-6">
+    <%= link_to v1_units_path, class: "group inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors" do %>
+      <span class="text-lg group-hover:-translate-x-1 transition-transform duration-200">←</span>
+      <span class="font-medium">Back to Units</span>
     <% end %>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% @units.each do |unit| %>
-      <div class="group relative bg-slate-900/40 border border-white/5 rounded-3xl p-6 hover:bg-slate-900/60 hover:border-indigo-500/30 transition-all duration-300 shadow-xl">
-        
-        <div class="absolute top-6 right-6">
-          <span class="flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-        </div>
+  <div class="mb-8">
+    <h1 class="text-4xl font-black text-white tracking-tight">
+      Add New <span class="text-indigo-500">Unit</span>
+    </h1>
+    <p class="text-slate-400 mt-2">Initialize a new property asset with specific pricing and status.</p>
+  </div>
 
-        <div class="flex items-start gap-4 mb-6">
-          <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-            🏢
+  <div class="relative overflow-hidden bg-slate-900/50 border border-white/10 backdrop-blur-xl rounded-[2.5rem] p-8 shadow-2xl">
+    
+    <div class="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full z-0 pointer-events-none"></div>
+
+    <%= form_with model: [:v1, @unit], class: "space-y-6 relative z-10", local: true do |f| %>
+      
+      <% if @unit.errors.any? %>
+        <div class="bg-rose-500/10 border border-rose-500/20 p-5 rounded-2xl mb-6 animate-in fade-in slide-in-from-top-2">
+          <div class="flex items-center gap-2 text-rose-400 font-bold mb-2">
+            <span class="text-lg">⚠️</span>
+            <p><%= pluralize(@unit.errors.count, "error") %> prohibited this unit from being saved:</p>
           </div>
-          <div>
-            <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
-              <%= unit.name %>
-            </h3>
-            <p class="text-slate-500 text-sm uppercase tracking-widest font-semibold mt-1">
-              Residential Unit
-            </p>
-          </div>
+          <ul class="list-disc list-inside text-rose-300/80 text-sm space-y-1 ml-2">
+            <% @unit.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
         </div>
+      <% end %>
 
-        <div class="bg-slate-950/50 rounded-2xl p-4 mb-6 border border-white/5">
-          <div class="flex justify-between items-center">
-            <span class="text-slate-400 text-sm">Monthly Rent</span>
-            <span class="text-emerald-400 font-black text-xl">
-              ₹<%= number_with_delimiter(unit.rent_amount) %>
-            </span>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <%= link_to v1_unit_path(unit), 
-              class: "flex-1 text-center py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white text-sm font-bold transition border border-white/10" do %>
-            View Details
-          <% end %>
-          
-          <%= link_to edit_v1_unit_path(unit), 
-              class: "px-4 py-2.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 transition" do %>
-            ✏️
-          <% end %>
-        </div>
-
+      <div class="group">
+        <%= f.label :name, "Unit Name / Number", class: "block text-sm font-medium text-slate-400 group-focus-within:text-indigo-400 transition-colors mb-2" %>
+        <%= f.text_field :name, 
+            placeholder: "e.g. Apartment 4B or Sunset Villa",
+            required: true,
+            class: "w-full px-4 py-3 rounded-xl bg-slate-950/50 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark]" %>
       </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="group">
+          <%= f.label :rent_amount, "Monthly Rent", class: "block text-sm font-medium text-slate-400 group-focus-within:text-indigo-400 transition-colors mb-2" %>
+          <div class="relative">
+            <span class="absolute left-4 top-3 text-slate-500 font-medium">₹</span>
+            <%= f.number_field :rent_amount, 
+                placeholder: "0.00",
+                step: "any",
+                required: true,
+                class: "w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/50 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark]" %>
+          </div>
+        </div>
+
+        <div class="group">
+          <%= f.label :status, "Unit Availability", class: "block text-sm font-medium text-slate-400 group-focus-within:text-indigo-400 transition-colors mb-2" %>
+          <div class="relative">
+            <%= f.select :status, 
+                Unit.statuses.keys.map { |s| [s.humanize, s] }, 
+                { selected: @unit.status || 'vacant' }, 
+                { class: "w-full px-4 py-3 rounded-xl bg-slate-950/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all [color-scheme:dark] appearance-none cursor-pointer" } %>
+            
+            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-500 group-hover:text-indigo-400 transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 pt-6">
+        <%= f.submit "Create Property Unit", 
+            data: { disable_with: "Processing..." },
+            class: "flex-1 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-extrabold shadow-lg shadow-indigo-500/20 hover:scale-[1.01] hover:brightness-110 active:scale-95 transition-all cursor-pointer" %>
+      </div>
+
     <% end %>
   </div>
-
-  <% if @units.empty? %>
-    <div class="text-center py-20 bg-slate-900/20 border-2 border-dashed border-white/5 rounded-[3rem]">
-      <div class="text-5xl mb-4 text-slate-700">🏢</div>
-      <h3 class="text-xl font-bold text-slate-400">No units added yet</h3>
-      <p class="text-slate-600 mt-2">Start your portfolio by creating your first property unit.</p>
-    </div>
-  <% end %>
-
 </div>

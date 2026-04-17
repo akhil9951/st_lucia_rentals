@@ -16,10 +16,30 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       
       <% if resource.errors.any? %>
-        <div class="mb-6 p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-xs">
+        <div class="mb-6 p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-xs animate-in fade-in slide-in-from-top-2">
           <%= render "devise/shared/error_messages", resource: resource %>
         </div>
       <% end %>
+
+      <div class="mb-6 relative z-10">
+        <label class="block text-sm font-medium text-slate-300 mb-3 text-center">I want to register as a:</label>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <label class="relative flex flex-col items-center justify-center p-4 rounded-xl border border-white/10 bg-slate-900/50 cursor-pointer group hover:border-indigo-500/50 transition-all has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-500/10">
+            <%= f.radio_button :role, "owner", class: "sr-only" %>
+            <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🏢</span>
+            <span class="text-sm font-bold text-slate-300 group-hover:text-white">Owner</span>
+            <div class="absolute top-2 right-2 w-2 h-2 rounded-full border border-white/20 bg-transparent peer-checked:bg-indigo-500"></div>
+          </label>
+
+          <label class="relative flex flex-col items-center justify-center p-4 rounded-xl border border-white/10 bg-slate-900/50 cursor-pointer group hover:border-purple-500/50 transition-all has-[:checked]:border-purple-500 has-[:checked]:bg-purple-500/10">
+            <%= f.radio_button :role, "tenant", class: "sr-only" %>
+            <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🔑</span>
+            <span class="text-sm font-bold text-slate-300 group-hover:text-white">Tenant</span>
+            <div class="absolute top-2 right-2 w-2 h-2 rounded-full border border-white/20 bg-transparent peer-checked:bg-purple-500"></div>
+          </label>
+        </div>
+      </div>
 
       <div class="mb-5 relative z-10">
         <%= f.label :email, class: "block text-sm font-medium text-slate-300 mb-2" %>
@@ -28,11 +48,10 @@
           autocomplete: "email",
           placeholder: "name@company.com",
           class: "w-full px-4 py-3 rounded-xl
-                   bg-slate-900/80 border border-white/10
-                   text-white placeholder-slate-500
-                   focus:outline-none focus:ring-2 focus:ring-purple-500/50
-                   focus:border-purple-500 focus:bg-slate-900
-                   transition duration-200
+                   bg-slate-950/70 border border-white/10
+                   text-white placeholder-slate-600
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500/50
+                   focus:border-indigo-500 transition
                    [color-scheme:dark]
                    autofill:shadow-[0_0_0_30px_#0f172a_inset] 
                    autofill:text-fill-white" %>
@@ -50,11 +69,10 @@
           autocomplete: "new-password",
           placeholder: "••••••••",
           class: "w-full px-4 py-3 rounded-xl
-                   bg-slate-900/80 border border-white/10
-                   text-white placeholder-slate-500
-                   focus:outline-none focus:ring-2 focus:ring-purple-500/50
-                   focus:border-purple-500 focus:bg-slate-900
-                   transition duration-200
+                   bg-slate-950/70 border border-white/10
+                   text-white placeholder-slate-600
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500/50
+                   focus:border-indigo-500 transition
                    [color-scheme:dark]
                    autofill:shadow-[0_0_0_30px_#0f172a_inset] 
                    autofill:text-fill-white" %>
@@ -66,11 +84,10 @@
           autocomplete: "new-password",
           placeholder: "Confirm your password",
           class: "w-full px-4 py-3 rounded-xl
-                   bg-slate-900/80 border border-white/10
-                   text-white placeholder-slate-500
-                   focus:outline-none focus:ring-2 focus:ring-purple-500/50
-                   focus:border-purple-500 focus:bg-slate-900
-                   transition duration-200
+                   bg-slate-950/70 border border-white/10
+                   text-white placeholder-slate-600
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500/50
+                   focus:border-indigo-500 transition
                    [color-scheme:dark]
                    autofill:shadow-[0_0_0_30px_#0f172a_inset] 
                    autofill:text-fill-white" %>
@@ -79,8 +96,8 @@
       <div class="relative z-10">
         <%= f.submit "Get Started",
           class: "w-full py-4 rounded-xl
-                   bg-gradient-to-r from-pink-500 to-violet-600
-                   text-white font-bold text-lg
+                   bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600
+                   text-white font-extrabold text-lg
                    shadow-lg shadow-purple-500/20
                    hover:scale-[1.02] hover:brightness-110 transition
                    active:scale-95 cursor-pointer" %>
@@ -90,7 +107,7 @@
 
     <div class="my-8 flex items-center gap-3 relative z-10">
       <div class="h-px bg-white/10 flex-1"></div>
-      <span class="text-xs text-slate-600 uppercase tracking-widest font-bold">Already have an account?</span>
+      <span class="text-[10px] text-slate-600 uppercase tracking-widest font-black">Existing User?</span>
       <div class="h-px bg-white/10 flex-1"></div>
     </div>
 

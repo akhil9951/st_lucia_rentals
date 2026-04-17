@@ -26,9 +26,7 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :tenants
     resources :units
-    resources :leases do
-      resources :payments, only: [:index, :create]
-    end
+    resources :leases
     resources :payments
   end
 

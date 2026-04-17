@@ -1,87 +1,106 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+puts "🌱 Seeding data..."
 
-
-# साफ clean old data (optional but useful)
+# 🧹 Clean old data (optional)
 Payment.destroy_all
 Lease.destroy_all
 Unit.destroy_all
 Tenant.destroy_all
+User.destroy_all
 
-puts "🌱 Seeding data..."
-
-# 👤 Tenants
-tenants = [
-  { name: "Akhil", email: "akhil@test.com", phone: "9999999991" },
-  { name: "Ravi", email: "ravi@test.com", phone: "9999999992" },
-  { name: "Suresh", email: "suresh@test.com", phone: "9999999993" }
-]
-
-tenants = tenants.map { |t| Tenant.create!(t) }
-
-# 🏢 Units
-units = [
-  { name: "Flat-101", rent_amount: 10000, status: 1 },
-  { name: "Flat-102", rent_amount: 12000, status: 1 },
-  { name: "Flat-103", rent_amount: 8000, status: 0 }
-]
-
-units = units.map { |u| Unit.create!(u) }
-
-# 🔗 Leases
-leases = []
-
-leases << Lease.create!(
-  tenant: tenants[0],
-  unit: units[0],
-  start_date: Date.today - 30,
-  rent_amount: 10000,
-  due_date: Date.today - 5,
-  status: 0
+# 👑 CREATE OWNERS
+owner1 = User.create!(
+  email: "owner1@test.com",
+  password: "password123",
+  role: :owner,
+  confirmed_at: Time.current
 )
 
-leases << Lease.create!(
-  tenant: tenants[1],
-  unit: units[1],
-  start_date: Date.today - 20,
-  rent_amount: 12000,
-  due_date: Date.today + 5,
-  status: 0
+owner2 = User.create!(
+  email: "owner2@test.com",
+  password: "password123",
+  role: :owner,
+  confirmed_at: Time.current
 )
 
-# 💰 Payments
-Payment.create!(
-  tenant: tenants[0],
-  lease: leases[0],
-  amount: 6000,
-  payment_date: Date.today - 3,
-  status: 1,
-  transaction_id: "TXN1001"
-)
+puts "👑 Owners created"
 
-Payment.create!(
-  tenant: tenants[0],
-  lease: leases[0],
-  amount: 4000,
-  payment_date: Date.today - 1,
-  status: 1,
-  transaction_id: "TXN1002"
-)
+# 🏠 CREATE UNITS FOR OWNERS
+units_owner1 = 5.times.map do |i|
+  Unit.create!(
+    name: "Owner1-Flat-#{i+1}",
+    rent_amount: rand(8000..15000),
+    status: "vacant",
+    owner: owner1
+  )
+end
 
-Payment.create!(
-  tenant: tenants[1],
-  lease: leases[1],
-  amount: 5000,
-  payment_date: Date.today,
-  status: 0, # pending
-  transaction_id: "TXN1003"
-)
+units_owner2 = 5.times.map do |i|
+  Unit.create!(
+    name: "Owner2-Flat-#{i+1}",
+    rent_amount: rand(9000..18000),
+    status: "vacant",
+    owner: owner2
+  )
+end
+
+puts "🏢 Units created"
+
+# 👤 CREATE TENANTS + USERS
+tenants_owner1 = 5.times.map do |i|
+  user = User.create!(
+    email: "tenant#{i+1}@test.com",
+    password: "password123",
+    role: :tenant,
+    confirmed_at: Time.current
+  )
+
+  Tenant.create!(
+    name: "Tenant #{i+1}",
+    email: user.email,
+    user: user,
+    owner: owner1
+  )
+end
+
+tenants_owner2 = 5.times.map do |i|
+  user = User.create!(
+    email: "tenant#{i+6}@test.com",
+    password: "password123",
+    role: :tenant,
+    confirmed_at: Time.current
+  )
+
+  Tenant.create!(
+    name: "Tenant #{i+6}",
+    email: user.email,
+    user: user,
+    owner: owner2
+  )
+end
+
+puts "👥 Tenants created"
+
+# 📄 CREATE LEASES (connect tenants to units)
+tenants_owner1.each_with_index do |tenant, i|
+  Lease.create!(
+    tenant: tenant,
+    unit: units_owner1[i],
+    start_date: Date.today - 10,
+    due_date: Date.today + rand(-5..5),
+    rent_amount: units_owner1[i].rent_amount
+  )
+end
+
+tenants_owner2.each_with_index do |tenant, i|
+  Lease.create!(
+    tenant: tenant,
+    unit: units_owner2[i],
+    start_date: Date.today - 15,
+    due_date: Date.today + rand(-5..5),
+    rent_amount: units_owner2[i].rent_amount
+  )
+end
+
+puts "📑 Leases created"
 
 puts "✅ Seeding completed!"

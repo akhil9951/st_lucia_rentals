@@ -4,6 +4,7 @@
 class Unit < ApplicationRecord
   has_many :leases, dependent: :destroy
   has_many :tenants, through: :leases   # 🔥 THIS FIXES YOUR ERROR
+  belongs_to :owner, class_name: "User"
 
   validates :name, :rent_amount, presence: true
 

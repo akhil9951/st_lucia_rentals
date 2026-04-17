@@ -3,16 +3,17 @@ class User < ApplicationRecord
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable,
-         :confirmable
+         :validatable
 
   enum role: { owner: 0, tenant: 1 }
 
   has_one :tenant, dependent: :destroy
+  has_many :owned_units, class_name: "Unit", foreign_key: "owner_id"
+  has_many :owned_tenants, class_name: "Tenant", foreign_key: "owner_id"
 
   after_create :send_welcome_email
   after_create :generate_and_send_otp
-  after_create_commit :ensure_tenant_exists
+  # after_create_commit :ensure_tenant_exists
 
   def generate_and_send_otp
     generate_otp!
@@ -44,12 +45,12 @@ class User < ApplicationRecord
     DeviseMailer.welcome_email(self).deliver_later
   end
 
-  def ensure_tenant_exists
-    return unless tenant?
+  # def ensure_tenant_exists
+  #   return unless tenant?
 
-    Tenant.find_or_create_by!(user: self) do |t|
-      t.name = email.split("@").first.capitalize
-      t.email = email
-    end
-  end
+  #   Tenant.find_or_create_by!(user: self) do |t|
+  #     t.name = email.split("@").first.capitalize
+  #     t.email = email
+  #   end
+  # end
 end
