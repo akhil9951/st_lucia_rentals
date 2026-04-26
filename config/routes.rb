@@ -27,7 +27,13 @@ Rails.application.routes.draw do
     resources :tenants
     resources :units
     resources :leases
-    resources :payments
+  
+    resources :payments do
+      collection do
+        post :create_order
+        post :verify
+      end
+    end
   end
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_16_185416) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_20_080036) do
   create_table "leases", force: :cascade do |t|
     t.integer "tenant_id", null: false
     t.integer "unit_id", null: false
@@ -22,8 +22,19 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_16_185416) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "late_fee"
+    t.integer "balance_due_cents"
     t.index ["tenant_id"], name: "index_leases_on_tenant_id"
     t.index ["unit_id"], name: "index_leases_on_unit_id"
+  end
+
+  create_table "payment_allocations", force: :cascade do |t|
+    t.integer "payment_id", null: false
+    t.integer "lease_id", null: false
+    t.integer "amount_cents"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lease_id"], name: "index_payment_allocations_on_lease_id"
+    t.index ["payment_id"], name: "index_payment_allocations_on_payment_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -85,6 +96,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_16_185416) do
 
   add_foreign_key "leases", "tenants"
   add_foreign_key "leases", "units"
+  add_foreign_key "payment_allocations", "leases"
+  add_foreign_key "payment_allocations", "payments"
   add_foreign_key "payments", "leases"
   add_foreign_key "payments", "tenants"
   add_foreign_key "tenants", "users"

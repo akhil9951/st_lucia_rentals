@@ -1,0 +1,16 @@
+<h2>Rent Payment Received</h2>
+
+<p>Hello <%= @owner.email %>,</p>
+
+<p>
+  Tenant <strong><%= @tenant.name %></strong> paid this month's rent.
+</p>
+
+<p>
+  <strong>Unit:</strong> <%= @unit.name %><br>
+  <strong>Amount Paid:</strong> ₹<%= @payment.amount %><br>
+  <strong>Payment Date:</strong> <%= @payment.payment_date.strftime("%B %d, %Y") %><br>
+  <strong>Transaction ID:</strong> <%= @payment.transaction_id %>
+</p>
+
+<p>Thank you,<br>St Lucia Rentals</p>

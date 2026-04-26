@@ -1,0 +1,99 @@
+<div class="max-w-5xl mx-auto px-4">
+
+  <h1 class="text-3xl font-black text-white mb-6">
+    Payment <span class="text-indigo-400">Details</span>
+  </h1>
+
+  <!-- Payment Summary -->
+  <div class="bg-slate-900/50 border border-white/10 rounded-3xl p-6 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+      <div>
+        <p class="text-slate-400 text-sm">Amount</p>
+        <p class="text-2xl font-bold text-emerald-400">
+          ₹<%= @payment.amount %>
+        </p>
+      </div>
+
+      <div>
+        <p class="text-slate-400 text-sm">Date</p>
+        <p class="text-white font-semibold">
+          <%= @payment.payment_date %>
+        </p>
+      </div>
+
+      <div>
+        <p class="text-slate-400 text-sm">Status</p>
+        <p class="text-indigo-400 font-bold">
+          <%= @payment.status.capitalize %>
+        </p>
+      </div>
+
+      <div>
+        <p class="text-slate-400 text-sm">Transaction</p>
+        <p class="text-white text-sm">
+          <%= @payment.transaction_id %>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Allocation Breakdown -->
+  <div class="bg-slate-900/40 border border-white/5 rounded-3xl shadow-xl overflow-hidden">
+    
+    <div class="p-6 border-b border-white/5">
+      <h2 class="text-xl font-bold text-white">
+        Allocation Breakdown
+      </h2>
+      <p class="text-slate-400 text-sm mt-1">
+        How this payment was distributed across leases
+      </p>
+    </div>
+
+    <div class="divide-y divide-white/5">
+      <% @payment.payment_allocations.each do |alloc| %>
+
+        <div class="p-6 flex justify-between items-center">
+
+          <!-- Left -->
+          <div>
+            <p class="text-white font-semibold">
+              Lease #<%= alloc.lease.id %> — <%= alloc.lease.unit.name %>
+            </p>
+
+            <p class="text-slate-400 text-sm">
+              Due: <%= alloc.lease.due_date %>
+            </p>
+
+            <p class="text-slate-500 text-xs mt-1">
+              Remaining Balance:
+              ₹<%= alloc.lease.balance_due_cents.to_i / 100.0 %>
+            </p>
+          </div>
+
+          <!-- Right -->
+          <div class="text-right">
+
+            <p class="text-xl font-bold text-emerald-400">
+              ₹<%= alloc.amount_cents / 100.0 %>
+            </p>
+
+            <% if alloc.amount_cents >= alloc.lease.rent_amount.to_i * 100 %>
+              <span class="text-green-400 text-xs font-bold">Full Paid</span>
+            <% elsif alloc.lease.balance_due_cents < 0 %>
+              <span class="text-purple-400 text-xs font-bold">Overpaid</span>
+            <% else %>
+              <span class="text-yellow-400 text-xs font-bold">Partial</span>
+            <% end %>
+
+          </div>
+
+        </div>
+
+      <% end %>
+    </div>
+
+  </div>
+
+</div>

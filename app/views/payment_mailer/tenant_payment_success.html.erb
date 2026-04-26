@@ -1,0 +1,16 @@
+<h2>Payment Successful</h2>
+
+<p>Hello <%= @tenant.name %>,</p>
+
+<p>
+  You successfully paid this month's lease amount.
+</p>
+
+<p>
+  <strong>Unit:</strong> <%= @unit.name %><br>
+  <strong>Amount Paid:</strong> ₹<%= @payment.amount %><br>
+  <strong>Payment Date:</strong> <%= @payment.payment_date.strftime("%B %d, %Y") %><br>
+  <strong>Transaction ID:</strong> <%= @payment.transaction_id %>
+</p>
+
+<p>Thank you,<br>St Lucia Rentals</p>

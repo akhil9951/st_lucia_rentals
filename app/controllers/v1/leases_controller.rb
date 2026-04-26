@@ -30,7 +30,7 @@ module V1
       if @lease.save
         redirect_to v1_leases_path, notice: "Lease created"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -41,7 +41,7 @@ module V1
       if @lease.update(lease_params)
         redirect_to v1_lease_path(@lease), notice: "Lease updated successfully"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

@@ -19,4 +19,8 @@ class ApplicationController < ActionController::Base
   def require_owner
     redirect_to root_path, alert: "Access denied!" unless current_user&.owner?
   end
+
+  def require_tenant
+    redirect_to root_path, alert: "Access denied!" unless current_user&.tenant?
+  end
 end
